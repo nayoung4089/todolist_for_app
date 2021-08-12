@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/prologue.css">
+    <link rel="stylesheet" href="css/category.css">
+    <link rel="stylesheet" href="css/mainpage.css">
+    <link rel="stylesheet" href="css/result.css">
+    <link rel="stylesheet" href="css/goldmedal.css">
+    <script src = "javascript/greeting.js" defer></script>
+    <script src = "javascript/clock.js" defer></script>
+    <!-- <script src = "js/weather.js" defer></script> -->
+    <script src = "javascript/todo.js" defer></script>
+    <script src = "javascript/category.js" defer></script>
+    <script src = "javascript/resultbar.js" defer></script>
+    <script src = "javascript/clearalert.js" defer></script>
+    <script src = "javascript/gold.js" defer></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/27c417e7b0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+<div id = "weather">
+    <span></span>
+    <span></span>
+</div>
+    
+<!-- 이름 물어보기 -->
+<div class="for-center">
+<form id="login-form" class="hidden">
+    <img src="img/로고2.png" class="animate__animated animate__rubberBand">
+    <div class="name">
+        당신의 이름을 알려주세요!
+    </div>
+    <input type ="text" maxlength="10" required />
+    <input type ="submit" value = "확인">
+</form>
+
+<!-- 카테고리, 목표일수 변경 페이지 -->
+<div id="category-page" class="hidden">
+    <img src="img/blink.png" class="blink">
+    <div class="title">카테고리</div>
+    <div class="sub">당신의 목표를 만들어보세요!</div>
+    <form id="category-form">
+        <div id="slidecontainer" class="animate__animated animate__bounceIn">
+            <h3>목표일수</h2>
+            <input id="myRange" type="range" min="3" max="100" value="1" class="slider">
+            <p>목표: <span id="value"></span>일</p>
+          </div>
+        <input id = "my-category" type="text" maxlength="6" required />
+        <input type="submit" value="확인">
+    </form>
+    <div class="tips">
+        <div class="tip"><span class="yellow">Tip</span><span class="note"> 목표일수만 조정하기 <br> 기존의 것 삭제 + 같은 카테고리명으로 다시 입력</span></div>
+    </div>
+    <ul id ="categorylist"></ul>
+    <button id="return-button">나가기</button>
+</div>
+
+<!-- 메인페이지 -->
+<div id="mainpage" class="hidden">
+    <img src="img/blink.png" class="blink">
+    <img src="img/5.png" style="width:40%">
+    <!-- 날짜와 시간  -->
+    <div id="clock">00/00 (일)</div>
+    <!-- 이름 저장하고 환영인사 -->
+    <div id="greeting" class="animate__animated animate__bounceInLeft"></div>
+
+    <!-- todo_list -->
+    <br><button id="write-todo">일정 & 목표적기</button>
+    <div id ="show-or-none" class="hidden">
+        <button id="category-plus">카테고리 변경</button>
+        <i class="fas fa-cog"></i>
+        <form id = "todo-form">
+            <select id="framework">
+                <option>선택안함</option>
+            </select>
+            <input type="date" id="myDate" required>
+            <input id ="hi" type="text" required />
+            <input type="submit" value="확인">
+    </form>
+    </div>
+    <!-- todolist 들어갈 자리 -->
+    <ul id ="todolist">
+    </ul>
+
+    <!-- 결과창 들어가기 버튼 -->
+    <button id="medal-button">메달 보러가기</button>
+    <!-- 이름변경 -->
+    <br><br><button id ="change-button">이름변경</button>
+</div>
+</div>
+
+    <!-- 결과창 -->
+<div id="result-page" class="hidden">
+    <img src="img/blink.png" class="blink">
+    <div class="title">달성정도</div>
+    <div class="sub">우리 한번 열심히 메달을 모아볼까요?</div>
+    <!-- 결과 bar -->
+    <div id="result-box">
+        <!-- <div class="total-card">
+            <div class="card">
+                <div class="progress"></div>
+                <div class="content">
+                    <h3>title</h3>
+                    <p>title</p>
+                </div>
+            </div>
+        </div> -->
+    <!-- <div class="total-card">
+        <div class="flex">
+            <div class="text-box">
+            <h3>title</h3>
+            <p class="percentage"></p>
+            </div>
+            <img src="~~~">
+        </div>
+        <div class="card">
+            <div class="progress">
+            </div>
+        </div>
+    </div> -->
+    </div>
+    <button id="go-to-medal">명예의 전당</button>
+    <br><button id="exit">나가기</button>
+    <img src="img/blink-two.png" class="blink-two">
+</div>
+
+<!-- 명예의 전당 -->
+<div id="award-page" class="hidden">
+    <img src="img/blink.png" class="blink">
+    <div class="title">명예의 전당</div>
+    <div class="sub">매달 기록된 당신의 메달들,
+        <br>뿌듯해도 좋습니다! 기쁨을 만끽하세요!
+    </div>
+    <button id = "reloading"></button>
+    <h3>현재</h3>
+    <div id="now-award">
+        <!-- <div class="monthly-gold">
+                <div class="year-month">
+                </div>
+                <div class="gold-box">
+                    <div class="gold-category"></div>
+                    <img src="메달링크">
+                </div>
+            </div> -->
+    </div>
+    <h3>수상이력</h3>
+    <div id="past-award">
+        <!-- <div class="monthly-gold">
+                <div class="year-month">
+                </div>
+                <div class="gold-box">
+                    <div class="gold-category"></div>
+                </div>
+            </div> -->
+    </div>
+    <button id="exit-award">뒤로가기</button>
+    <img src="img/blink-two.png" class="blink-two">
+</div>
+
+<!-- <div class="card">
+    <div class="progress" style="width:70%"></div>
+    <div class="content">
+      <h3>Progress Card</h3>
+      <p>Card which uses the background colour to show progress.</p>
+      <p class="percentage">70%</p>
+    </div>
+  </div> -->
+
+
+</body>
+</html>

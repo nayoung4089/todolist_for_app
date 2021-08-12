@@ -1,0 +1,79 @@
+/* 결과창 progressBar */
+.total-card{
+    text-align: initial;
+    padding: 20px;
+  }
+  .flex{
+    padding: 10px;
+    display: flex;
+    background-color: var(--third-color);
+  }
+  .text-box{
+    width: 100%;
+    /* 이거 써주니까 메달이 딱 정위치에 왔다! 신기 */
+  }
+  /* .flex h3{
+    text-align: initial;
+    flex : 0.7;
+    font-size: 1.4em;
+  } */
+  img {
+    width: 30%;
+  }
+  
+  .card {
+    background-color:var(--gagebar-color);
+    box-sizing:border-box;
+    position:relative;
+    /* width:20em; */
+  }
+    
+  .progress {
+    bottom:0;
+    left:0;
+    position:absolute;
+    top:0;
+  }
+  .percentage{
+    color:var(--gagebar-color);
+  }
+  .progress:before {
+    animation:slideIn 2s ease-out;
+    background-color:var(--second-color);
+    bottom:0;
+    left:0;
+    content:"";
+    position:absolute;
+    top:0;
+    width:100%;
+  }
+  
+  @keyframes slideIn {
+    0% {
+      background-color:var(--second-color);
+      width:0;
+    }
+    100% {
+      background-color:var(--second-color);
+      width:100%;
+    }
+  }
+  
+/* 결과창 꾸미기 이미지  */
+/* .total-title{
+  display: flex;
+  justify-content: center;
+} */
+.blink, .blink-two{
+  position:absolute;
+  width: 20%;
+  padding:5px;
+}
+.blink{
+  left:0%;
+  top:0%;
+}
+.blink-two{
+  right:0%;
+  bottom:0%;
+}
