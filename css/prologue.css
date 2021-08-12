@@ -126,3 +126,8 @@
   padding: 0 5px;
   color: white;
 }
+
+/* 알림창 꾸미기 */
+.swal-button--confirm{
+  background-color: var(--second-color);
+}

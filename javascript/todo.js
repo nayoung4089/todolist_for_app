@@ -9,7 +9,7 @@ const todoWritePage = document.querySelector("#show-or-none");
 function saveIt(){
     swal("성공적으로 저장되었습니다", {
         buttons: false,
-        timer: 2000,
+        timer: 1000,
       });
 }
 // 버튼 누르면 입력창 뜨게 만들기
