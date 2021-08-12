@@ -40,6 +40,7 @@
   li{
     font-weight: 500;
     padding: 5px;
+    font-size: 1.01rem;
   }
   
   /* 투두리스트 이쁘게 작성 */
@@ -61,7 +62,7 @@
     padding: 0px 7px;
   }
   #span, #selected-category{
-    width: 120px;
+    width: 110px;
   }
   #todolist li button{
     /* 오엑스 맨 뒤에 딱붙게*/
