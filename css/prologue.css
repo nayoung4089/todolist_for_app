@@ -74,8 +74,8 @@
     position: relative;
   }
   #mainpage, #category-page, #result-page, #award-page{
-    margin-top: 80px;
-    margin-bottom: 80px;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
   /* 블링블링 추가 */
   /* #mainpage img{
