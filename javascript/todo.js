@@ -52,7 +52,7 @@ function finishItems(){
 function paintTodo(newTodo){
     // 디데이 관련 함수
     const now = new Date(); // 오늘날짜 
-    const myGoal = new Date(newTodo.date); //목표날짜
+    const myGoal = new Date(`${newTodo.date} 00:00`); //목표날짜
     const distance = myGoal.getTime() - now.getTime();
     const dDay = distance/(1000*60*60*24); // 우선 그냥 값 적기
 

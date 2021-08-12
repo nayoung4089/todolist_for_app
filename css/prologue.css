@@ -74,7 +74,8 @@
     position: relative;
   }
   #mainpage, #category-page, #result-page, #award-page{
-    min-height: 100vh;
+    margin-top: 100px;
+    margin-bottom: 100px;
   }
   /* 블링블링 추가 */
   /* #mainpage img{

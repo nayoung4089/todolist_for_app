@@ -6,6 +6,8 @@ function sayCongratulations(){
         button: "보러가기",
 }).then(() => {
     count();
+    mainpage.classList.add(HIDDEN_CLASS);
+    resultpage.classList.remove(HIDDEN_CLASS);
     exitMedalButton.classList.add(HIDDEN_CLASS);
     goldButton.classList.add(HIDDEN_CLASS);
 });
