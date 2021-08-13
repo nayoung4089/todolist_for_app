@@ -4,7 +4,7 @@ const calendar = document.querySelector("#calendar");
 const todolist = document.querySelector("#todolist");
 const writeTodoButton = document.querySelector("#write-todo");
 const todoWritePage = document.querySelector("#show-or-none");
-
+const dayPicker = document.querySelector("#myDate"); // 캘린더 정보 localStorage 저장하기
 // 완료 표시창
 function saveIt(){
     swal("성공적으로 저장되었습니다", {
@@ -24,30 +24,22 @@ writeTodoButton.addEventListener("click",function(){
 // 카테고리 변경 누르면 변경 페이지로 이동
 const categoryChangeButton = document.querySelector("#category-plus");
 const categoryPage = document.querySelector("#category-page");
-
 function changeCategoryPage(){
     mainpage.classList.add(HIDDEN_CLASS);
     categoryPage.classList.remove(HIDDEN_CLASS);
 }
 categoryChangeButton.addEventListener("click",changeCategoryPage);
-
-// 캘린더 정보 localStorage 저장하기
-const dayPicker = document.querySelector("#myDate");
-
 let todos = [];
 //localStorage에 저장하기
-
 function saveItems(){
     localStorage.setItem("todos",JSON.stringify(todos));
 }
-
 // 성공한 정보 저장하기
 let clears = [];
 //localStorage에 저장하기
 function finishItems(){
     localStorage.setItem("clears",JSON.stringify(clears));
 }
-
 // ul = todo-list에 li / span 넣기
 function paintTodo(newTodo){
     // 디데이 관련 함수
@@ -55,11 +47,9 @@ function paintTodo(newTodo){
     const myGoal = new Date(`${newTodo.date} 00:00`); //목표날짜
     const distance = myGoal.getTime() - now.getTime();
     const dDay = distance/(1000*60*60*24); // 우선 그냥 값 적기
-
     const li = document.createElement("li");
     li.id = newTodo.id;
     li.className = "what-to-do";
-    
     // 날짜정보 --> 디데이로 변경완료
     const day = document.createElement("span");
     day.id = "day";
@@ -77,13 +67,10 @@ function paintTodo(newTodo){
         li.value = Math.abs(Math.ceil(dDay)) + 100;
         day.style = "background-color:#5968B0"
     } 
-
-    // day.innerText = newTodo.date;
     // 카테고리
     const cate = document.createElement("span");
     cate.id = "cate";
     cate.innerText = newTodo.category;
-    // cate.className = HIDDEN_CLASS;
     // 일정정보
     const span = document.createElement("span");
     span.id = "span";
@@ -91,13 +78,11 @@ function paintTodo(newTodo){
     li.appendChild(day);
     li.appendChild(cate);
     li.appendChild(span);
-
     // 완료버튼
     const okButton = document.createElement("button");
     okButton.innerText = "✔";
     okButton.className = "ok";
     li.appendChild(okButton);
-
     // 완료함수
     function pleaseFinish(event){
         const li = event.target.parentElement;
@@ -115,11 +100,8 @@ function paintTodo(newTodo){
             const finishDay = li.querySelector("#day").innerText;
             const finishCategory = li.querySelector("#cate").innerText;
             const finishString = li.querySelector("#span").innerText; // 아오.. id지정을 안했으니 null이었지...
-    
             // range 정보 불러오기 --> by categories
             let savedCategories = JSON.parse(localStorage.getItem("categories"));
-            console.log(savedCategories);
-    
             function getRangebyCategory(savedCategories, text) {
                 var ret = savedCategories.filter(function (item) {
                     return item.text === text;
@@ -127,11 +109,7 @@ function paintTodo(newTodo){
                 return ret[0];
             }
             savedCategories = getRangebyCategory(savedCategories, finishCategory); 
-            // 할때 innerText와 비교하니까 절대! 꾸민답시고 category에 뭐 써주지 말기 굳이 하려면 key=categories도 바꿔주자
-            console.log(savedCategories);
-    
-            console.log(finishString);
-    
+            // 할때 innerText와 비교하니까 절대! 꾸민답시고 category에 뭐 써주지 말기 굳이 하려면 key=categories도 바꿔주자    
             const finishTodoObj = {
                 category: finishCategory,
                 date: finishDay,
@@ -146,12 +124,10 @@ function paintTodo(newTodo){
                 }
             });      
     }
-
     // 지우기버튼
     const eraseButton = document.createElement("button");
     eraseButton.innerText = "✖";
     li.appendChild(eraseButton);
-
     // 지우기 함수 --> 누르면 localStorage에 저장하지 않기
     function remove(event){
         const li = event.target.parentElement;
@@ -175,13 +151,11 @@ function paintTodo(newTodo){
     okButton.addEventListener("click",pleaseFinish);
     todolist.appendChild(li); 
 }
-
 // 자동 새로고침 막고 localStorage에 저장하기
 function handleTodoSubmit(event){
     event.preventDefault(); // 자동 새로고침 막기
     const newTodo = todoInput.value; // 입력값 받기
     todoInput.value = ""; // 새로고침했을 때 이렇게 뜨게
-
     // 최종 localStorage 저장목록
     const newTodoObj = {
         id: Date.now(),
@@ -194,7 +168,6 @@ function handleTodoSubmit(event){
     saveItems(); // localStorage에 저장
 }
 todoForm.addEventListener("submit",handleTodoSubmit);
-
 // 저장된 todolist를 새로고침해도 없어지지 않게 만들기
 const savedTodos = localStorage.getItem("todos"); // localStorage에 저장된 key name = todos를 가져온다
 if(savedTodos){
@@ -202,7 +175,6 @@ if(savedTodos){
     todos = parseTodos; // 새로고침 전 localStorage에 기록된 것들도 지워지지 않고 포함되게 하려고
     parseTodos.forEach(paintTodo); // paintTodo는 todolist의 정보를 가지고 있어서, 이 함수를 각각 item마다 실행시켜줘 이말!
 }
-
 // 성공한 애들
 const savedFinishTodos = localStorage.getItem("clears"); // localStorage에 저장된 key name = todos를 가져온다
 if(savedFinishTodos){
@@ -210,8 +182,6 @@ if(savedFinishTodos){
     clears = finishParseTodos; // 새로고침 전 localStorage에 기록된 것들도 지워지지 않고 포함되게 하려고
     // finishParseTodos.forEach(paintTodo); // paintTodo는 todolist의 정보를 가지고 있어서, 이 함수를 각각 item마다 실행시켜줘 이말!
 }
-
-
 // 디데이 순서대로 정렬
 const ascending = (a,b)=> parseInt(a.value) - parseInt(b.value);
 let currentOrder = ascending;

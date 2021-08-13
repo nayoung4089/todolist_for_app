@@ -10,15 +10,12 @@ function sayCongratulations(){
     resultpage.classList.remove(HIDDEN_CLASS);
     exitMedalButton.classList.add(HIDDEN_CLASS);
     goldButton.classList.add(HIDDEN_CLASS);
-});
-    
+});  
 }
-
 //medalCard 만들기
 function cardForGold(title, num){
     // range 정보 불러오기 --> by categories
     let savedCategories = JSON.parse(localStorage.getItem("categories"));
-    console.log(savedCategories);
     function getRangebyCategory(savedCategories, text) {
         var ret = savedCategories.filter(function (item) {
             return item.text === text;
@@ -31,7 +28,6 @@ function cardForGold(title, num){
             sayCongratulations();
         }
 }
-
 function countForGold() {
     var resultCategories = JSON.parse(localStorage.getItem("clears"));
     let hashMap = {}
@@ -45,22 +41,14 @@ function countForGold() {
          hashMap[resultCategory.category] = 1;
         }
       }
-    console.log(hashMap);
     let outputArray = []
     Object.keys(hashMap).forEach(key => {
       outputArray.push({key , count: hashMap[key]});
       cardForGold(key, hashMap[key]); // 함수 잘 실행
 })
-    console.log(outputArray); // 잘 나오는지 확인
 }
 const okeys = document.querySelectorAll(".ok");
 var myfunction = countForGold();
-// if(okeys){
-// for (var i = 0; i < okeys.length; i++) {
-//     okeys[i].addEventListener('click', myfunction);
-// }
-// }
-
 if(okeys){
     okeys.forEach(el => el.addEventListener('click', myfunction));
 }

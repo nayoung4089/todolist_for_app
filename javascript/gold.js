@@ -1,17 +1,14 @@
 // key = goldMedals
 const savedGoldMedals = localStorage.getItem("goldMedals");
 const getGoldMedals = JSON.parse(savedGoldMedals);
-
 // 저장된 gold를 새로고침해도 없어지지 않게 만들기
 if(savedGoldMedals){
     goldMedals = getGoldMedals; // 새로고침 전 localStorage에 기록된 것들도 지워지지 않고 포함되게 하려고
 }
-
 // array 중 {} 하나랑만 관계있는 함수
 const awardPage = document.querySelector("#award-page");
 const pastAward = document.querySelector("#past-award");
 const nowAward = document.querySelector("#now-award");
-
 function makeAward(name, pastAward, getGoldMedals){
     // getGoldMedals = getGoldMedals.reverse();
     const monthlyGold = document.createElement("div");
@@ -23,12 +20,10 @@ function makeAward(name, pastAward, getGoldMedals){
     const yearMonth= document.createElement("div");
     yearMonth.className = "year-month";
     monthlyGold.appendChild(yearMonth);
-
     // 메달 박스
     const goldBox = document.createElement("div");
     goldBox.className = "gold-box";
     monthlyGold.appendChild(goldBox);
-
     //들어가는 내용들
     // 날짜
     if(getGoldMedals.year){
@@ -54,7 +49,6 @@ function makeAward(name, pastAward, getGoldMedals){
     goldBox.appendChild(goldCategory);
     goldCategory.innerText = getGoldMedals.category;
 }
-
 // 명예의 전당 버튼 createElement 삭제
 function eraseAward(){
     awardPage.classList.remove(HIDDEN_CLASS); // 명예의 전당 보여주기
@@ -84,8 +78,6 @@ goldButton.addEventListener("click", async function(){
         }); // array 속 모든 item에 대하여 함수 실행
     }
 })
-
-
 const exitAwardButton = document.querySelector("#exit-award"); // 결과페이지로 이동
 exitAwardButton.addEventListener("click",function(){
     awardPage.classList.add(HIDDEN_CLASS);
