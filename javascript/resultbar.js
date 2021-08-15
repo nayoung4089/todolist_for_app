@@ -60,7 +60,11 @@ function makeCard(title, num){
     flex.appendChild(medalImg); // body에 child로 넣는다는 말!   
     // range값 필요한 애들만 밑에 따로.
     const percentage = Math.round(num/savedCategories.range*100); // 퍼센트 만들기
-    newProgress.style = `width:${percentage}%`;
+    if(percentage<=100){
+        newProgress.style = `width:${percentage}%`;
+    }else{
+        newProgress.style = "width:100%"; // 넘어서면 100프로로 무조건 체크되게 수정
+    }
     pPercent.innerText = `${num}/${savedCategories.range}`;
     function giveMedal(medalnum){
         if(percentage<=30){
@@ -104,6 +108,7 @@ function makeCard(title, num){
                 const goldMedalObj = {
                     year: clickDay.getFullYear(),
                     month:String(clickDay.getMonth() +1).padStart(2,"0"),
+                    date: String(clickDay.getDate()).padStart(2,"0"),
                     category: title,
                     medal: 1,
                 }

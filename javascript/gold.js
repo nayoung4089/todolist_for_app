@@ -27,7 +27,7 @@ function makeAward(name, pastAward, getGoldMedals){
     //들어가는 내용들
     // 날짜
     if(getGoldMedals.year){
-        yearMonth.innerText = `${getGoldMedals.year}\n${getGoldMedals.month}`;
+        yearMonth.innerText = `${getGoldMedals.year}\n${getGoldMedals.month}/${getGoldMedals.date}`;
         // 색깔 편하게 넣기 위해 month 숫자로 변경하고, 순서대로 색지정
         const colorNumber = parseInt(getGoldMedals.month)-1;
         const colors = ["#7F7F7F","#F78D7C","#FFB37A","#D2C6C1","#2F5597","#BF9000","#A7A7A7","#FFA602","#4472C4","#D9D9D9","#F8C800","#B9AAA0"];
@@ -39,9 +39,7 @@ function makeAward(name, pastAward, getGoldMedals){
             const goldImg = document.createElement("img");
             goldBox.appendChild(goldImg); 
             goldImg.src = `img/${getGoldMedals.medal}.png`;
-        }else{
-            yearMonth.innerText = "2021\n08";
-        }  
+        }
     }
     //카테고리
     const goldCategory = document.createElement("div");
