@@ -46,6 +46,45 @@ function makeAward(name, pastAward, getGoldMedals){
     goldCategory.className = "gold-category";
     goldBox.appendChild(goldCategory);
     goldCategory.innerText = getGoldMedals.category;
+
+    // 관련 카테고리 누르면 지금까지 뭐 했는지 보여주기
+    const popupPage = document.querySelector("#popup-page");
+    const fillTitle = document.querySelector("#fill-title");
+    const detail = document.querySelector("#detail");
+    const quit = document.querySelector(".quit");
+    function whatIDid(a){
+        a.forEach((element) => {
+            if(element.category == getGoldMedals.category){
+                popupPage.classList.remove(HIDDEN_CLASS);
+                awardPage.classList.add(HIDDEN_CLASS);
+                const didIt = document.createElement("li");
+                detail.appendChild(didIt);
+                didIt.classList.add(MUST_ANIMATION);
+                didIt.classList.add(THIRD_ANIMATION);
+                const didDay = document.createElement("span");
+                didIt.appendChild(didDay);
+                didDay.innerText = `${element.finishYear}\n${element.finishDay}`;
+                didDay.className = "did-day";
+                const didList = document.createElement("span");
+                didIt.appendChild(didList);
+                didList.className = "did-list";
+                didList.innerText = element.text;
+                fillTitle.innerText = getGoldMedals.category; // 큰제목 
+            }
+        });
+    }
+    goldBox.addEventListener("click",function(){
+        if(yearMonth.innerText == ""){
+            whatIDid(JSON.parse(localStorage.getItem("clears")));
+        }else{
+            whatIDid(JSON.parse(localStorage.getItem("lefts")));
+        }
+    })
+    quit.addEventListener("click",function(){
+        detail.innerHTML ="";
+        popupPage.classList.add(HIDDEN_CLASS);
+        awardPage.classList.remove(HIDDEN_CLASS);
+    })
 }
 // 명예의 전당 버튼 createElement 삭제
 function eraseAward(){

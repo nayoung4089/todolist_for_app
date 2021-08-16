@@ -109,12 +109,15 @@ function paintTodo(newTodo){
                 return ret[0];
             }
             savedCategories = getRangebyCategory(savedCategories, finishCategory); 
-            // 할때 innerText와 비교하니까 절대! 꾸민답시고 category에 뭐 써주지 말기 굳이 하려면 key=categories도 바꿔주자    
+            // 할때 innerText와 비교하니까 절대! 꾸민답시고 category에 뭐 써주지 말기 굳이 하려면 key=categories도 바꿔주자 
+            const pastDate = new Date();   
             const finishTodoObj = {
                 category: finishCategory,
                 date: finishDay,
                 text: finishString,
                 range: savedCategories.range,
+                finishYear:String(pastDate.getFullYear()),
+                finishDay: `${String(pastDate.getMonth() +1).padStart(2,"0")}/${String(pastDate.getDate()).padStart(2,"0")}`
             };
             clears.push(finishTodoObj);
             finishItems();  

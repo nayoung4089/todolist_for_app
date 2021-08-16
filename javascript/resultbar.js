@@ -17,6 +17,11 @@ let goldMedals = [];
 function goldMedalItems(){
     localStorage.setItem("goldMedals",JSON.stringify(goldMedals));
 }
+// 금메달 정보(과거에 뭐 했는지) localStorage 저장
+let lefts = [];
+function leftItems(){
+    localStorage.setItem("lefts",JSON.stringify(lefts));
+}
 //medalCard 만들기
 function makeCard(title, num){
     // range 정보 불러오기 --> by categories
@@ -101,6 +106,14 @@ function makeCard(title, num){
                 exitMedalButton.classList.remove(HIDDEN_CLASS);
                 goldButton.classList.remove(HIDDEN_CLASS);              
                 totalCard.innerHTML = '';
+                // lefts에 clears에서 지울거 넣어주기
+                const forLefts = JSON.parse(localStorage.getItem("clears"));
+                for(forLeft of forLefts){
+                    if(forLeft.category == title){
+                        lefts.push(forLeft);
+                        leftItems();
+                    }
+                }
                 clears = clears.filter((clear) =>clear.category !== title); //localStorage에 지워진 건 저장되지 못하게
                 finishItems(); // 원래 저장하는 localStorage 함수에 업데이트
                 // 클릭했을 때 시간 저장하려고 일부러 여기다가 둠
@@ -164,5 +177,8 @@ function exitResultPage(){
     medals = [];
 }
 exitMedalButton.addEventListener("click",exitResultPage);
-
-
+// 금메달까지 성공한 애들 --> 반드시 이 과정 거쳐야 한다ㅠㅠ
+const savedFinishMedals = localStorage.getItem("lefts");
+if(savedFinishMedals){
+    lefts = JSON.parse(savedFinishMedals); // 새로고침 전 localStorage에 기록된 것들도 지워지지 않고 포함되게.
+}
