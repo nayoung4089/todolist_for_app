@@ -29,12 +29,12 @@ function paintCategory(newCategory){
     li.id = newCategory.id;
     // range정보 넣기
     const rangeSpan = document.createElement("span");
-    rangeSpan.innerText = `${newCategory.range}일 동안`;
+    rangeSpan.innerText = `[목표: ${newCategory.range}번]`;
     rangeSpan.id = "selected-range";
     li.appendChild(rangeSpan);
     // category 정보 넣기
     const span = document.createElement("span");
-    span.innerText = ` ${newCategory.text}`
+    span.innerText = ` ${newCategory.text}`;
     span.id="selected-category";
     li.appendChild(span);
     // 메인페이지 select에 localStorage key = categories 불러오기 위해
