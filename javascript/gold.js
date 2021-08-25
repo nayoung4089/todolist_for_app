@@ -64,8 +64,8 @@ function makeAward(name, pastAward, getGoldMedals){
                 didIt.classList.add(MUST_ANIMATION);
                 didIt.classList.add(THIRD_ANIMATION);               
                 if(element.finishFullDate){
-                    didIt.style.order = -parseInt(element.finishFullDate.replaceAll("-",""));
-                }else{didIt.style.order = -parseInt(`${element.finishYear}${element.finishDay.replace("/","")}`);}
+                    didIt.style.order = parseInt(element.finishFullDate.replaceAll("-",""));
+                }else{didIt.style.order = parseInt(`${element.finishYear}${element.finishDay.replace("/","")}`);}
                 const didDay = document.createElement("span");
                 didIt.appendChild(didDay);
                 didDay.innerText = `${element.finishYear}\n${element.finishDay}`;
