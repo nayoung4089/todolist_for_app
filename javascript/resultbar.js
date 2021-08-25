@@ -26,7 +26,6 @@ function leftItems(){
 function makeCard(title, num){
     // range 정보 불러오기 --> by categories
     let savedCategories = JSON.parse(localStorage.getItem("categories"));
-    console.log(savedCategories);
     function getRangebyCategory(savedCategories, text) {
         var ret = savedCategories.filter(function (item) {
             return item.text === text;

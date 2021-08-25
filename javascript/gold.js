@@ -13,6 +13,7 @@ function makeAward(name, pastAward, getGoldMedals){
     // getGoldMedals = getGoldMedals.reverse();
     const monthlyGold = document.createElement("div");
     monthlyGold.className = name;
+    monthlyGold.classList.add("did-li-list");
     monthlyGold.classList.add(MUST_ANIMATION);
     monthlyGold.classList.add(THIRD_ANIMATION);
     pastAward.appendChild(monthlyGold);
@@ -52,15 +53,19 @@ function makeAward(name, pastAward, getGoldMedals){
     const fillTitle = document.querySelector("#fill-title");
     const detail = document.querySelector("#detail");
     const quit = document.querySelector(".quit");
-    function whatIDid(a){
+    function whatIDid(a,b){
         a.forEach((element) => {
             if(element.category == getGoldMedals.category){
                 popupPage.classList.remove(HIDDEN_CLASS);
                 awardPage.classList.add(HIDDEN_CLASS);
                 const didIt = document.createElement("li");
                 detail.appendChild(didIt);
+                didIt.classList.add("finished-li-list");
                 didIt.classList.add(MUST_ANIMATION);
-                didIt.classList.add(THIRD_ANIMATION);
+                didIt.classList.add(THIRD_ANIMATION);               
+                if(element.finishFullDate){
+                    didIt.style.order = -parseInt(element.finishFullDate.replaceAll("-",""));
+                }else{didIt.style.order = -parseInt(`${element.finishYear}${element.finishDay.replace("/","")}`);}
                 const didDay = document.createElement("span");
                 didIt.appendChild(didDay);
                 didDay.innerText = `${element.finishYear}\n${element.finishDay}`;
@@ -69,15 +74,31 @@ function makeAward(name, pastAward, getGoldMedals){
                 didIt.appendChild(didList);
                 didList.className = "did-list";
                 didList.innerText = element.text;
-                fillTitle.innerText = getGoldMedals.category; // 큰제목 
+                fillTitle.innerText = getGoldMedals.category; // 큰제목
+                // 수정페이지
+                let elementCategory = element.category;
+                if(element.id){
+                    didIt.id = element.id;
+                    didIt.addEventListener("click",function(){
+                        bg.classList.remove(HIDDEN_CLASS);
+                        changeClearPage.classList.remove(HIDDEN_CLASS);
+                        changeClearDate.defaultValue = element.finishFullDate;
+                        chnageClearDo.defaultValue = element.text;
+                        if (b == 0){
+                            changeFunction(changeClearForm, didIt, elementCategory, changeClearPage, 2);
+                        }else{
+                            changeFunction(changeClearForm, didIt, elementCategory, changeClearPage, 3);
+                        }
+                    })
+                };
             }
         });
     }
-    goldBox.addEventListener("click",function(){
+    monthlyGold.addEventListener("click",function(){
         if(yearMonth.innerText == ""){
-            whatIDid(JSON.parse(localStorage.getItem("clears")));
+            whatIDid(JSON.parse(localStorage.getItem("clears")),0);
         }else{
-            whatIDid(JSON.parse(localStorage.getItem("lefts")));
+            whatIDid(JSON.parse(localStorage.getItem("lefts")),1);
         }
     })
     quit.addEventListener("click",function(){
@@ -120,4 +141,3 @@ exitAwardButton.addEventListener("click",function(){
     awardPage.classList.add(HIDDEN_CLASS);
     resultpage.classList.remove(HIDDEN_CLASS);
 })
-

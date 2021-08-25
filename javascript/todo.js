@@ -5,6 +5,7 @@ const todolist = document.querySelector("#todolist");
 const writeTodoButton = document.querySelector("#write-todo");
 const todoWritePage = document.querySelector("#show-or-none");
 const dayPicker = document.querySelector("#myDate"); // 캘린더 정보 localStorage 저장하기
+const bg = document.querySelector("#bg");
 // 완료 표시창
 function saveIt(){
     swal("성공적으로 저장되었습니다", {
@@ -75,9 +76,12 @@ function paintTodo(newTodo){
     const span = document.createElement("span");
     span.id = "span";
     span.innerText = newTodo.text;
-    li.appendChild(day);
-    li.appendChild(cate);
-    li.appendChild(span);
+    // 전체 span 넣기
+    const bigSpan = document.createElement("span");
+    li.appendChild(bigSpan);
+    bigSpan.appendChild(day);
+    bigSpan.appendChild(cate);
+    bigSpan.appendChild(span);
     // 완료버튼
     const okButton = document.createElement("button");
     okButton.innerText = "✔";
@@ -112,10 +116,12 @@ function paintTodo(newTodo){
             // 할때 innerText와 비교하니까 절대! 꾸민답시고 category에 뭐 써주지 말기 굳이 하려면 key=categories도 바꿔주자 
             const pastDate = new Date();   
             const finishTodoObj = {
+                id: Date.now(),
                 category: finishCategory,
                 date: finishDay,
                 text: finishString,
                 range: savedCategories.range,
+                finishFullDate: `${String(pastDate.getFullYear())}-${String(pastDate.getMonth() +1).padStart(2,"0")}-${String(pastDate.getDate()).padStart(2,"0")}`,
                 finishYear:String(pastDate.getFullYear()),
                 finishDay: `${String(pastDate.getMonth() +1).padStart(2,"0")}/${String(pastDate.getDate()).padStart(2,"0")}`
             };
@@ -153,6 +159,16 @@ function paintTodo(newTodo){
     eraseButton.addEventListener("click",remove);
     okButton.addEventListener("click",pleaseFinish);
     todolist.appendChild(li); 
+    // 수정하기
+    const newTodoCategory = newTodo.category;
+    bigSpan.addEventListener("click",function(){
+        changeTodoPage.classList.remove(HIDDEN_CLASS);
+        bg.classList.remove(HIDDEN_CLASS);
+        document.querySelector("#get-name").innerText = newTodoCategory;
+        changeDate.defaultValue = newTodo.date;
+        chnageDo.defaultValue = newTodo.text;
+        changeFunction(changeTodoForm, li, newTodoCategory, changeTodoPage, 1);
+    })
 }
 // 자동 새로고침 막고 localStorage에 저장하기
 function handleTodoSubmit(event){

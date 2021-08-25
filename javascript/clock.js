@@ -31,7 +31,6 @@ function getClock(){
             break;
     };
     day.innerText = `${months}/${dates} (${nowday})`;
-
 }
 getClock();
 // 1초마다 함수 실행

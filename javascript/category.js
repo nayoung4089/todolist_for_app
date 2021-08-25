@@ -27,6 +27,7 @@ function categoryItems(){
 function paintCategory(newCategory){
     const li = document.createElement("li");
     li.id = newCategory.id;
+    li.className = "my-category";
     // range정보 넣기
     const rangeSpan = document.createElement("span");
     rangeSpan.innerText = `[목표: ${newCategory.range}번]`;
@@ -42,6 +43,16 @@ function paintCategory(newCategory){
     framework.appendChild(option);
     option.value = newCategory.text;
     option.innerText = newCategory.text;
+    // 목표일자 수정버튼
+    let newCategorytext = newCategory.text;
+    rangeSpan.addEventListener("click",function(event){
+        const li = event.target.parentElement;
+        changeCatePage.classList.remove(HIDDEN_CLASS);
+        bg.classList.remove(HIDDEN_CLASS);
+        document.querySelector("#get-cat").innerText = newCategorytext;
+        changeNum.defaultValue = newCategory.range;
+        changeFunction(changeCategoryForm, li, newCategorytext, changeCatePage, 0);
+    })
     // 지우기버튼
     const eraseButton = document.createElement("button");
     eraseButton.innerText = "✖";

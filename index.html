@@ -9,8 +9,10 @@
 <link rel=stylesheet href=css/mainpage.css>
 <link rel=stylesheet href=css/result.css>
 <link rel=stylesheet href=css/goldmedal.css>
+<link rel=stylesheet href=css/change.css>
 <script src=javascript/greeting.js defer></script>
 <script src=javascript/clock.js defer></script>
+<script src=javascript/change.js defer></script>
 <script src=javascript/todo.js defer></script>
 <script src=javascript/category.js defer></script>
 <script src=javascript/resultbar.js defer></script>
@@ -50,7 +52,7 @@
 <input type=submit value=확인>
 </form>
 <div class=tips>
-<div class=tip><span class=yellow>Tip</span><span class=note> 목표횟수만 조정하는 방법 <br> 같은 카테고리명으로 다시 입력 후 기존의 것 삭제</span></div>
+<div class=tip><span class=yellow>Tip</span><span class=note> 목표횟수 조정하는 방법 <br> 원하는 카테고리의 [목표: ??번] 클릭</span></div>
 </div>
 <ul id=categorylist></ul>
 <button id=return-button>나가기</button>
@@ -113,10 +115,43 @@
 <div id=popup-page class=hidden>
 <img src=img/blink.png class=blink>
 <div class=title id=fill-title></div>
-<div class=sub>이렇게나 많이! 정말 멋져요!
-</div>
+<div class=sub>이렇게나 많이! 정말 멋져요!</div>
 <ul id=detail></ul>
+<div class=tips>
+<div class=tip><span class=yellow>Tip</span><span class=note> 달성기록 수정하기<br>수정하고 싶은 블록을 클릭해주세요!</span></div>
+</div>
 <button class=quit>뒤로가기</button>
+</div>
+<div id=bg class=hidden></div>
+<div id=change-category class=hidden>
+<button id=x>X</button>
+<div class=cat-mame id=get-cat>카테고리</div>
+<div class=name>목표횟수를 입력해주세요</div>
+<form id=change-category-form>
+<input id=change-num type=number ste=1 min=3 max=100 required />
+<input type=submit value=확인>
+</form>
+</div>
+<div id=change-todo class=hidden>
+<button id=xx>X</button>
+<form id=change-todo-form>
+<div class=cat-mame id=get-name>카테고리</div>
+<div class=name>변경일자</div>
+<input id=change-date type=date required>
+<div class=name>목표</div>
+<input id=change-do type=text required />
+<input type=submit value=확인>
+</form>
+</div>
+<div id=change-clear class=hidden>
+<button id=xxx>X</button>
+<form id=change-clear-form>
+<div class=name>완료날짜 변경</div>
+<input id=change-clear-date type=date required>
+<div class=name>완료목표 변경</div>
+<input id=change-clear-do type=text required />
+<input type=submit value=확인>
+</form>
 </div>
 </body>
 </html>
