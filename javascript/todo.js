@@ -167,7 +167,7 @@ function paintTodo(newTodo){
         document.querySelector("#get-name").innerText = newTodoCategory;
         changeDate.defaultValue = newTodo.date;
         chnageDo.defaultValue = newTodo.text;
-        changeFunction(changeTodoForm, li, newTodoCategory, changeTodoPage, 1);
+        changeFunction(changeTodoForm, li, newTodoCategory, 0,0, 1);
     })
 }
 // 자동 새로고침 막고 localStorage에 저장하기

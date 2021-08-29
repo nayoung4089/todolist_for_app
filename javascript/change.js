@@ -6,14 +6,47 @@ const changeTodoForm = document.querySelector("#change-todo-form");
 const changeDate = document.querySelector("#change-date");
 const chnageDo = document.querySelector("#change-do");
 const changeTodoPage = document.querySelector("#change-todo");
-const changeClearForm = document.querySelector("#change-clear-form");
-const changeClearDate = document.querySelector("#change-clear-date");
-const chnageClearDo = document.querySelector("#change-clear-do");
-const changeClearPage = document.querySelector("#change-clear");
-function changeFunction(changeCategoryForm, li, newCategorytext, changeCatePage, a){
-    changeCategoryForm.addEventListener("submit",function(){
+const pop = document.querySelector("#pop");
+// 팝업창 만들기 - 명예의 전당
+function forInput(a,b,date,changeClearForm){
+    const goalName = document.createElement("div");
+    goalName.className = "name";
+    goalName.innerText = a;
+    const changeClearDate = document.createElement("input");
+    changeClearDate.id = b;
+    changeClearDate.type = date;
+    changeClearDate.required = true;
+    changeClearForm.appendChild(goalName);
+    changeClearForm.appendChild(changeClearDate);
+};
+function popupReward(){
+    const changeClear = document.createElement("div");
+    changeClear.id = "change-clear";
+    pop.appendChild(changeClear);
+    const x = document.createElement("button");
+    x.id="xxx";
+    x.innerText = "x";
+    const changeClearForm = document.createElement("form");
+    changeClearForm.id = "change-clear-form";
+    forInput("완료날짜 변경","change-clear-date","date",changeClearForm);
+    forInput("완료목표 변경","change-clear-do","text",changeClearForm);
+    const submitButton = document.createElement("input");
+    submitButton.type="submit";
+    submitButton.value="확인";
+    pop.appendChild(changeClearForm);
+    changeClear.appendChild(x);
+    changeClear.appendChild(changeClearForm);
+    changeClearForm.appendChild(submitButton);
+    x.addEventListener("click",function(){
+        pop.innerHTML ="";
+        bg.classList.add(HIDDEN_CLASS);
+    })
+}
+function changeFunction(changeCategoryForm, li, newCategorytext, didDay, didList, a){
+    changeCategoryForm.addEventListener("submit",function(event){
         if(a == 0){
             categories = categories.filter((category) => category.id !== parseInt(li.id));
+            const changeNum = document.querySelector("#change-num");
             const changed = {
                 id: parseInt(li.id),
                 text: newCategorytext,
@@ -21,6 +54,7 @@ function changeFunction(changeCategoryForm, li, newCategorytext, changeCatePage,
             }
             categories.push(changed);
             categoryItems();// 로컬스토리지 저장
+            changeCatePage.classList.add(HIDDEN_CLASS);
             // didDay.innerText = `[목표: ${changeNum.value}번]`; // 새로고침 안돼도 결과 바로 달라지게 아예 html 손봄
         }else if(a == 1){
             todos = todos.filter((todo) => todo.id !== parseInt(li.id));
@@ -32,7 +66,11 @@ function changeFunction(changeCategoryForm, li, newCategorytext, changeCatePage,
             }
             todos.push(changed);
             saveItems();
+            changeTodoPage.classList.add(HIDDEN_CLASS);
         }else{
+            const changeClearDate = document.querySelector("#change-clear-date");
+            const chnageClearDo = document.querySelector("#change-clear-do");
+            event.preventDefault();
             const changed = {
                 id: parseInt(li.id),
                 category: newCategorytext,
@@ -41,22 +79,20 @@ function changeFunction(changeCategoryForm, li, newCategorytext, changeCatePage,
                 finishYear:String(new Date(changeClearDate.value).getFullYear()),
                 finishDay: `${String(new Date(changeClearDate.value).getMonth() +1).padStart(2,"0")}/${String(new Date(changeClearDate.value).getDate()).padStart(2,"0")}`
             }
+            didDay.innerText = `${String(new Date(changeClearDate.value).getFullYear())}\n${String(new Date(changeClearDate.value).getMonth() +1).padStart(2,"0")}/${String(new Date(changeClearDate.value).getDate()).padStart(2,"0")}`;
+            didList.innerText = chnageClearDo.value;
             if(a == 2){
-                console.log(changed);
-                console.log(clears);
                 clears = clears.filter((clear) => clear.id !== parseInt(li.id));
                 clears.push(changed);
                 finishItems();
             }else if(a == 3){
-                console.log(changed);
-                console.log(lefts);
                 lefts = lefts.filter((left) => left.id !== parseInt(li.id));
                 lefts.push(changed);
                 leftItems();
             }
         }
         saveIt(); // 완료창 뜨게
-        changeCatePage.classList.add(HIDDEN_CLASS);
+        pop.innerHTML ="";
         bg.classList.add(HIDDEN_CLASS);
     });
 }
@@ -64,11 +100,9 @@ function close(x,changeCatePage){
     document.querySelector(x).addEventListener("click",function(){
         changeCatePage.classList.add(HIDDEN_CLASS);
         bg.classList.add(HIDDEN_CLASS);
+        window.location.reload();
     })
 };
 close("#x",changeCatePage);
 close("#xx",changeTodoPage);
-close("#xxx",changeClearPage);
-
-
 

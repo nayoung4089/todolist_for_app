@@ -47,11 +47,13 @@ function paintCategory(newCategory){
     let newCategorytext = newCategory.text;
     rangeSpan.addEventListener("click",function(event){
         const li = event.target.parentElement;
-        changeCatePage.classList.remove(HIDDEN_CLASS);
+        // const newCategoryRange = newCategory.range;
+        // popupCategory(newCategoryRange);
         bg.classList.remove(HIDDEN_CLASS);
-        document.querySelector("#get-cat").innerText = newCategorytext;
-        changeNum.defaultValue = newCategory.range;
-        changeFunction(changeCategoryForm, li, newCategorytext, changeCatePage, 0);
+        changeCatePage.classList.remove(HIDDEN_CLASS);
+        document.querySelector("#get-cat").innerText = newCategorytext; 
+        changeNum.defaultValue = newCategory.range;       
+        changeFunction(changeCategoryForm, li, newCategorytext, 0,0,0);
     })
     // 지우기버튼
     const eraseButton = document.createElement("button");
@@ -91,7 +93,7 @@ function paintCategory(newCategory){
                         icon: "warning",
                         title: "아직 금메달을 못 땄는데..",
                         text: "정말 지우시겠습니까? \n 지우면 해당 카테고리 이전 기록도 전부 사라집니다",
-                        buttons: ["그만둘래요","지우기"],
+                        buttons: ["뒤로가기","지우기"],
                 }).then((지우기) => {
                     if(지우기){
                         clears = clears.filter((clear) => clear.category !== erasingCategory.replace(/\s/g, ''));

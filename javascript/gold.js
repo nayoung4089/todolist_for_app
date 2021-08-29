@@ -81,13 +81,17 @@ function makeAward(name, pastAward, getGoldMedals){
                     didIt.id = element.id;
                     didIt.addEventListener("click",function(){
                         bg.classList.remove(HIDDEN_CLASS);
-                        changeClearPage.classList.remove(HIDDEN_CLASS);
+                        // changeClearPage.classList.remove(HIDDEN_CLASS);
+                        popupReward();
+                        const changeClearForm = document.querySelector("#change-clear-form");
+                        const changeClearDate = document.querySelector("#change-clear-date");
+                        const chnageClearDo = document.querySelector("#change-clear-do");
                         changeClearDate.defaultValue = element.finishFullDate;
                         chnageClearDo.defaultValue = element.text;
                         if (b == 0){
-                            changeFunction(changeClearForm, didIt, elementCategory, changeClearPage, 2);
+                            changeFunction(changeClearForm, didIt, elementCategory, didDay,didList, 2);
                         }else{
-                            changeFunction(changeClearForm, didIt, elementCategory, changeClearPage, 3);
+                            changeFunction(changeClearForm, didIt, elementCategory, didDay,didList, 3);
                         }
                     })
                 };
