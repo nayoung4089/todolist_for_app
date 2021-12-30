@@ -25,13 +25,15 @@ function makeAward(name, pastAward, getGoldMedals){
     const goldBox = document.createElement("div");
     goldBox.className = "gold-box";
     monthlyGold.appendChild(goldBox);
+    // 빠른날짜 순서로 css 정렬
+    monthlyGold.style.order = -parseInt(`${getGoldMedals.year}${getGoldMedals.month}${getGoldMedals.date}`);
     //들어가는 내용들
     // 날짜
     if(getGoldMedals.year){
         yearMonth.innerText = `${getGoldMedals.year}\n${getGoldMedals.month}/${getGoldMedals.date}`;
         // 색깔 편하게 넣기 위해 month 숫자로 변경하고, 순서대로 색지정
         const colorNumber = parseInt(getGoldMedals.month)-1;
-        const colors = ["#7F7F7F","#F78D7C","#FFB37A","#D2C6C1","#2F5597","#BF9000","#A7A7A7","#FFA602","#4472C4","#D9D9D9","#F8C800","#B9AAA0"];
+        const colors = ["#FFADAD","#DF5E5E","#FF8243","#FFA602","#6ECB63","#548CFF","#B85C38","#C68B59","#9D9D9D","#B983FF","#7868E6","#F2789F"];
         yearMonth.style = `background-color:${colors[colorNumber]}`;
     }
     //이미지
@@ -51,6 +53,8 @@ function makeAward(name, pastAward, getGoldMedals){
     // 관련 카테고리 누르면 지금까지 뭐 했는지 보여주기
     const popupPage = document.querySelector("#popup-page");
     const fillTitle = document.querySelector("#fill-title");
+    const fillBottom = document.querySelector("#fill-bottom");
+    const fillDate = document.querySelector(".fill-date");
     const detail = document.querySelector("#detail");
     const quit = document.querySelector(".quit");
     function whatIDid(a,b){
@@ -74,7 +78,17 @@ function makeAward(name, pastAward, getGoldMedals){
                 didIt.appendChild(didList);
                 didList.className = "did-list";
                 didList.innerText = element.text;
-                fillTitle.innerText = getGoldMedals.category; // 큰제목
+                fillDate.innerText = `${getGoldMedals.year}/${getGoldMedals.month}/${getGoldMedals.date}`; // 큰제목 날짜
+                // ing중인 친구들한테 undefined 글자 안나오게..
+                if(fillDate.innerText == "undefined/undefined/undefined"){
+                    fillBottom.classList.add(HIDDEN_CLASS);
+                }else{
+                    fillBottom.classList.remove(HIDDEN_CLASS);
+                }
+                if(getGoldMedals.id){
+                    fillDate.id = getGoldMedals.id;
+                }
+                fillTitle.innerText = getGoldMedals.category; // 큰제목 카테고리
                 // 수정페이지
                 let elementCategory = element.category;
                 if(element.id){
@@ -94,10 +108,25 @@ function makeAward(name, pastAward, getGoldMedals){
                             changeFunction(changeClearForm, didIt, elementCategory, didDay,didList, 3);
                         }
                     })
-                };
+                };  
+                // 세부사항 페이지 날짜 누르면 수정창 뜨게
+                const newGoldCategory = getGoldMedals.category;
+                fillBottom.addEventListener("click",function(){
+                    if(fillDate.id){
+                        changeGoldPage.classList.remove(HIDDEN_CLASS);
+                        bg.classList.remove(HIDDEN_CLASS);
+                        document.querySelector("#get-goldname").innerText = newGoldCategory;
+                        changeFinDate.defaultValue = getGoldMedals.date;
+                        changeFunction(changeGoldForm, fillDate, newGoldCategory, 0,0, 4);
+                    }else{
+                        fillDate.id = Date.now();
+                        getGoldMedals.id = Date.now();
+                    }
+                })              
             }
         });
     }
+
     monthlyGold.addEventListener("click",function(){
         if(yearMonth.innerText == ""){
             whatIDid(JSON.parse(localStorage.getItem("clears")).reverse(),0);

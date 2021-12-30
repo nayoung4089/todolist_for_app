@@ -106,7 +106,7 @@
 <h3>현재</h3>
 <div id=now-award>
 </div>
-<h3>수상이력</h3>
+<h3 id=change-gold-button>수상이력</h3>
 <div id=past-award>
 </div>
 <button id=exit-award>뒤로가기</button>
@@ -115,6 +115,7 @@
 <div id=popup-page class=hidden>
 <img src=img/blink.png class=blink>
 <div class=title id=fill-title></div>
+<div id=fill-bottom><button class=fill-date></button><i class="fas fa-cog"></i></div>
 <div class=sub>이렇게나 많이! 정말 멋져요!</div>
 <ul id=detail></ul>
 <div class=tips>
@@ -140,6 +141,16 @@
 <input id=change-date type=date required>
 <div class=name>목표</div>
 <input id=change-do type=text required />
+<input type=submit value=확인>
+</form>
+</div>
+
+<div id=change-gold class=hidden>
+<button id=xxxx>X</button>
+<form id=change-gold-form>
+<div class=cat-mame id=get-goldname>카테고리</div>
+<div class=name>최종 완료날짜 변경</div>
+<input id=change-findate type=date required>
 <input type=submit value=확인>
 </form>
 </div>

@@ -63,7 +63,7 @@ function makeCard(title, num){
     const medalImg = document.createElement("img");
     flex.appendChild(medalImg); // body에 child로 넣는다는 말!   
     // range값 필요한 애들만 밑에 따로.
-    const percentage = Math.round(num/savedCategories.range*100); // 퍼센트 만들기
+    let percentage = Math.round(num/savedCategories.range*100); // 퍼센트 만들기
     if(percentage<=100){
         newProgress.style = `width:${percentage}%`;
     }else{
@@ -71,6 +71,69 @@ function makeCard(title, num){
     }
     pPercent.innerText = `${num}/${savedCategories.range}`;
     function giveMedal(medalnum){
+        if(percentage>=100){
+                //금메달
+                medalImg.src = "img/1.png";
+                medalnum = 1;
+                // 금메달은 따로 저장
+                // 게이지 꽉차면 newprogress = 반짝반짝 + 버튼으로 변화
+                h3.innerText = "클릭해주세요!";
+                totalCard.classList.add(MUST_ANIMATION);
+                totalCard.classList.add(MAIN_ANIMATION);
+                // newprogress 누르면 모든 것이 지워짐
+                function getGold(){
+                    // 명예의 전당 구경하라는 알림창
+                    swal({
+                        icon: "success",
+                        title: "성공적으로 저장되었습니다",
+                        text: "명예의 전당을 구경해보세요!",
+                        button: "확인"
+                      });
+                    // 지운 버튼 원상복귀
+                    exitMedalButton.classList.remove(HIDDEN_CLASS);
+                    goldButton.classList.remove(HIDDEN_CLASS);              
+                    totalCard.innerHTML = '';
+                    // lefts에 clears에서 지울거 넣어주기
+                    const forLefts = JSON.parse(localStorage.getItem("clears"));
+                    for(forLeft of forLefts){
+                        if(forLeft.category == title){
+                            lefts.push(forLeft);
+                            leftItems();
+                        }
+                    }
+                    clears = clears.filter((clear) =>clear.category !== title); //localStorage에 지워진 건 저장되지 못하게
+                    finishItems(); // 원래 저장하는 localStorage 함수에 업데이트
+                    // 클릭했을 때 시간 저장하려고 일부러 여기다가 둠
+                    const clickDay = new Date();
+                    const goldMedalObj = {
+                        id: Date.now(), 
+                        year: clickDay.getFullYear(),
+                        month:String(clickDay.getMonth() +1).padStart(2,"0"),
+                        date: String(clickDay.getDate()).padStart(2,"0"),
+                        category: title,
+                        medal: 1,
+                    }
+                    goldMedals.push(goldMedalObj);
+                    goldMedalItems(); // 저장해주는 거 잊지말기!
+                }
+                totalCard.addEventListener("click",getGold);
+                // localStorage 소멸 
+            
+        }else{
+        // 게이지바를 누르면 카테고리 변경페이지로 이동가능하게
+        totalCard.addEventListener("click", function(){
+            swal({
+                icon: "warning",
+                title: "아직 금메달을 못 땄는데..",
+                text: "목표일수를 바꿀까요? \n 카테고리 페이지로 이동합니다",
+                buttons: ["뒤로가기","목표일수 수정"],
+        }).then((목표일수수정) => {
+            if(목표일수수정){
+                resultpage.classList.add(HIDDEN_CLASS);
+                categoryPage.classList.remove(HIDDEN_CLASS);
+            }
+        });  
+        });  
         if(percentage<=30){
             //그냥
             medalImg.src = "img/4.png"; // <img src = "img/2.jpg"> 이런 식으로 생성됨
@@ -83,53 +146,8 @@ function makeCard(title, num){
             //은메달
             medalImg.src = "img/2.png";
             medalnum = 2;
-        }else{
-            //금메달
-            medalImg.src = "img/1.png";
-            medalnum = 1;
-            // 금메달은 따로 저장
-            // 게이지 꽉차면 newprogress = 반짝반짝 + 버튼으로 변화
-            h3.innerText = "클릭해주세요!";
-            totalCard.classList.add(MUST_ANIMATION);
-            totalCard.classList.add(MAIN_ANIMATION);
-            // newprogress 누르면 모든 것이 지워짐
-            function getGold(){
-                // 명예의 전당 구경하라는 알림창
-                swal({
-                    icon: "success",
-                    title: "성공적으로 저장되었습니다",
-                    text: "명예의 전당을 구경해보세요!",
-                    button: "확인"
-                  });
-                // 지운 버튼 원상복귀
-                exitMedalButton.classList.remove(HIDDEN_CLASS);
-                goldButton.classList.remove(HIDDEN_CLASS);              
-                totalCard.innerHTML = '';
-                // lefts에 clears에서 지울거 넣어주기
-                const forLefts = JSON.parse(localStorage.getItem("clears"));
-                for(forLeft of forLefts){
-                    if(forLeft.category == title){
-                        lefts.push(forLeft);
-                        leftItems();
-                    }
-                }
-                clears = clears.filter((clear) =>clear.category !== title); //localStorage에 지워진 건 저장되지 못하게
-                finishItems(); // 원래 저장하는 localStorage 함수에 업데이트
-                // 클릭했을 때 시간 저장하려고 일부러 여기다가 둠
-                const clickDay = new Date();
-                const goldMedalObj = {
-                    year: clickDay.getFullYear(),
-                    month:String(clickDay.getMonth() +1).padStart(2,"0"),
-                    date: String(clickDay.getDate()).padStart(2,"0"),
-                    category: title,
-                    medal: 1,
-                }
-                goldMedals.push(goldMedalObj);
-                goldMedalItems(); // 저장해주는 거 잊지말기!
-            }
-            totalCard.addEventListener("click",getGold);
-            // localStorage 소멸 
-        }
+        };
+        };
         const newMedalObj= {
             category: title,
             medal: medalnum,

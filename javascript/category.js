@@ -14,8 +14,7 @@ const framework = document.querySelector("#framework");
 //나가기 누르면 메인페이지로 이동
 const returnButton = document.querySelector("#return-button");
 function returnToMainPage(){
-    mainpage.classList.remove(HIDDEN_CLASS);
-    categoryPage.classList.add(HIDDEN_CLASS);
+    location.reload();
 }
 returnButton.addEventListener("click",returnToMainPage);
 let categories = [];

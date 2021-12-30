@@ -6,6 +6,9 @@ const changeTodoForm = document.querySelector("#change-todo-form");
 const changeDate = document.querySelector("#change-date");
 const chnageDo = document.querySelector("#change-do");
 const changeTodoPage = document.querySelector("#change-todo");
+const changeGoldForm = document.querySelector("#change-gold-form");
+const changeFinDate = document.querySelector("#change-findate");
+const changeGoldPage = document.querySelector("#change-gold");
 const pop = document.querySelector("#pop");
 // 팝업창 만들기 - 명예의 전당
 function forInput(a,b,date,changeClearForm){
@@ -67,7 +70,22 @@ function changeFunction(changeCategoryForm, li, newCategorytext, didDay, didList
             todos.push(changed);
             saveItems();
             changeTodoPage.classList.add(HIDDEN_CLASS);
-        }else{
+        }else if(a == 4){
+            goldMedals = goldMedals.filter((goldMedal) => goldMedal.id !== parseInt(li.id));
+            let changedgold = {
+                id: parseInt(li.id),
+                // 에러나지 않기 위해서는 new Date를 반드시 써줘야 함...
+                year: String(new Date(changeFinDate.value).getFullYear()),
+                month:String(new Date(changeFinDate.value).getMonth() +1).padStart(2,"0"),
+                date: String(new Date(changeFinDate.value).getDate()).padStart(2,"0"),
+                category: newCategorytext,
+                medal: 1,
+            }
+            goldMedals.push(changedgold);
+            goldMedalItems();
+            changeGoldPage.classList.add(HIDDEN_CLASS);
+        }
+        else{
             const changeClearDate = document.querySelector("#change-clear-date");
             const chnageClearDo = document.querySelector("#change-clear-do");
             event.preventDefault();
@@ -105,4 +123,5 @@ function close(x,changeCatePage){
 };
 close("#x",changeCatePage);
 close("#xx",changeTodoPage);
+close("#xxxx",changeGoldPage);
 
