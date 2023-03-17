@@ -4,7 +4,7 @@
 > Google Play: https://play.google.com/store/apps/details?id=com.nayoung4089.todolistmedal
 
 ## 🕰 개발기간
-~ 2021 (약 10일)
+~ 2021.08.31 (약 10일)
 
 ## ⚙ 개발 환경
 ```Javascript``` ```CSS``` ```HTML```
